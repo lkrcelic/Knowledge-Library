@@ -7,9 +7,8 @@
 - [Nginx for Frontend Apps](#nginx-for-frontend-apps)
 
 <br>
-<hr>
 
-### **Introduction**
+## **Introduction**
 
 Nginx is an open-source **web server software**. Usually used for:
 
@@ -20,19 +19,18 @@ Nginx is an open-source **web server software**. Usually used for:
 - proxy server (IMAP, POP3, SMTP protocols)
 
 <br>
-<hr>
 
-### **Architecture**
+## **Architecture**
 
 Implements event-driven, asynchronous, and non-blocking models, NGINX uses master-slave architecture.
 
-**Master**
+### **Master**
 
 - **Role** - Manages the server, including reading configurations and spawning worker processes.
 
 - **Characteristics**: Runs a single process that oversees the overall operation of NGINX.
 
-**Workers**
+### **Workers**
 
 - **Role**
 
@@ -55,8 +53,52 @@ Implements event-driven, asynchronous, and non-blocking models, NGINX uses maste
   - **Cache Manager** - Handles cache expiration and enforces size limits. Removes least recently used (LRU) items when cache exceeds max_size. Runs periodically to optimize storage and performance.
 
 <br>
-<hr>
 
-### **Nginx for Frontend Apps**
+![nginx-architecutre](nginx-architecutre.png)
+<br>
+<br>
 
-adsa
+## **NGINX for Frontend Apps**
+
+### **Why Use NGINX?**
+
+- **Fast Static File Serving** – Serves HTML, CSS, JS, and images directly from disk.
+- **Reverse Proxy for APIs** – Forwards requests to backend services, ensuring load balancing.
+- **SSL/TLS Termination** – Manages HTTPS encryption efficiently.
+- **Caching & Compression** – Uses **gzip** and **Brotli** for faster loading.
+- **Security** – Protects backend services, mitigates DDoS attacks.
+
+### **1. Containerized Frontend**
+
+- Deploy as a **Docker container** with NGINX serving built frontend files.
+- Typically used in **CI/CD pipelines** for automated deployments.
+- Example `Dockerfile`:
+  ```dockerfile
+  FROM nginx:alpine
+  COPY build/ /usr/share/nginx/html/
+  CMD ["nginx", "-g", "daemon off;"]
+  ```
+- This setup allows frontend apps to be served in **isolated environments**, making them easier to scale and deploy.
+
+### **2. Raw Code on Server**
+
+- Upload static frontend files to a server manually or via automation tools (e.g., SCP, FTP, CI/CD pipelines).
+- Configure NGINX to serve the frontend with **Single Page Application (SPA) routing**:
+
+  ```nginx
+  server {
+      listen 80;
+      root /var/www/frontend;
+      index index.html;
+
+      location / {
+          try_files $uri /index.html;
+      }
+  }
+  ```
+
+- Ensures that all frontend routes redirect to `index.html`, allowing frameworks like React, Vue, and Angular to handle routing client-side.
+
+### **Conclusion**
+
+NGINX enhances frontend performance, scalability, and security, making it a preferred choice for modern web applications.
