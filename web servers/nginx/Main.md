@@ -44,13 +44,13 @@ Implements event-driven, asynchronous, and non-blocking models, NGINX uses maste
 
   - **Event-Driven and Non-Blocking**: Utilize an event-driven architecture to handle multiple connections concurrently without creating additional threads. This design allows each worker process to manage thousands of simultaneous connections efficiently.
 
-- **Proxy caching**
+### **Proxy caching**
 
-  Improves performance by storing and serving frequently accessed content efficiently. It relies on two key processes:
+Improves performance by storing and serving frequently accessed content efficiently. It relies on two key processes:
 
-  - **Cache Loader** - Scans cached files on disk and loads metadata into memory. Works in small batches to prevent performance bottlenecks. Configurable via proxy_cache_path (e.g., loader_threshold,loader_files).
+- **Cache Loader** - Scans cached files on disk and loads metadata into memory. Works in small batches to prevent performance bottlenecks. Configurable via proxy_cache_path (e.g., loader_threshold,loader_files).
 
-  - **Cache Manager** - Handles cache expiration and enforces size limits. Removes least recently used (LRU) items when cache exceeds max_size. Runs periodically to optimize storage and performance.
+- **Cache Manager** - Handles cache expiration and enforces size limits. Removes least recently used (LRU) items when cache exceeds max_size. Runs periodically to optimize storage and performance.
 
 <br>
 
